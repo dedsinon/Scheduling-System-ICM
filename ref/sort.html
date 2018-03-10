@@ -1,0 +1,472 @@
+
+
+
+
+
+<?php
+$error='';
+if (isset($_POST['submit3'])) {
+  if (empty($_POST['search2'])) {
+    $error = "Username or Password is invalid";
+}
+else
+{
+    $subject_id = $_POST['search2'];
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "admindb";
+
+// Create connection
+
+    $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+    $sql = "DELETE FROM subject_tbl WHERE subject_id = '$subject_id'";
+
+
+    if (mysqli_query($conn, $sql)) {
+        header("location: subject.php");     
+    } else {
+        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+    }
+} 
+}
+?>
+
+
+<?php
+if(isset($_POST['submit4'])){
+    $subject_desc = $_POST['subject_desc'];
+
+    $subject_desc = ucwords($subject_desc);
+    $type = $_POST['type'];
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "admindb";
+
+// Create connection
+
+    $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+    if (trim($subject_desc) == '')
+    {
+        echo "<script>
+alert('Error Whitespace! Try again.');
+window.location.href='subject.php';
+</script>";
+    }else{
+
+    $sql = "INSERT INTO subject_tbl (type) VALUES ('$type')";
+
+    if ($type == 1) {
+        $sql = "INSERT INTO subject_tbl (subject_desc, type_desc, type) VALUES ('$subject_desc','Core', '$type')";
+    }elseif ($type == 2) {
+        $sql = "INSERT INTO subject_tbl (subject_desc, type_desc, type) VALUES ('$subject_desc','Contextualized', '$type')";
+    }elseif ($type == 3) {
+        $sql = "INSERT INTO subject_tbl (subject_desc, type_desc, type) VALUES ('$subject_desc','Specialized', '$type')";
+    }
+
+    if (mysqli_query($conn, $sql)) {
+        header("location: subject.php");     
+    } else {
+        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+    }
+}
+
+}
+
+?>
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+      <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Free Bootstrap Admin Template : Binary Admin</title>
+	<!-- BOOTSTRAP STYLES-->
+    <link href="assets/css/bootstrap.css" rel="stylesheet" />
+     <!-- FONTAWESOME STYLES-->
+    <link href="assets/css/font-awesome.css" rel="stylesheet" />
+        <!-- CUSTOM STYLES-->
+    <link href="assets/css/custom.css" rel="stylesheet" />
+     <!-- GOOGLE FONTS-->
+   <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+</head>
+<body>
+    <div id="wrapper">
+        <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.php">Binary admin</a> 
+            </div>
+  <div style="color: white;
+padding: 15px 50px 5px 50px;
+float: right;
+font-size: 16px;"> &nbsp; <a href="login.php" class="btn btn-danger square-btn-adjust">Logout</a> </div>
+        </nav>   
+           <!-- /. NAV TOP  -->
+                <nav class="navbar-default navbar-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav" id="main-menu">
+                <li class="text-center">
+                    <img src="assets/img/find_user.png" class="user-image img-responsive"/>
+                    </li>
+                
+                    
+                    <li>
+                        <a class="active-menu"  href="index.php"><i class="fa fa-home fa-3x"></i> Home</a>
+                    </li>
+                                       <li><a href="javascript:;" data-toggle="collapse" data-target="#demo1"><i class="fa fa-table fa-3x"></i> Tables <span class="fa arrow"></i></a>
+                            <ul class="nav nav-second-level">
+                                 
+                                
+                                <li>
+                                    <a href="student_information.php">Student Information</a>
+                                </li>
+                                <li>
+                                    <a href="user_list.php">User list</a>
+                                </li>
+                                <li>
+                                    <a href="#">Student Grades</a>
+                                </li>
+                                 
+                                 <li>
+                                    <a href="#">Remedial List</a>
+                                </li>
+                                 <li>
+                                    <a href="#">Summer Class List</a>
+                                </li>
+                                </ul>
+                    <li><a href="javascript:;" data-toggle="collapse" data-target="#demo2"><i class="fa fa fa-plus fa-3x"></i> Curriculum <span class="fa arrow"></i></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="subject.php">Subject</a>
+                                </li>
+                                 <li>
+                                    <a href="section.php">Section</a>
+                                </li>
+                                 <li>
+                                    <a href="strand.php">Strand</a>
+                                </li>
+                                <li>
+                                    <a href="school_year.php">School Year</a>
+                                </li>
+                                <li>
+                                    <a href="submission_date.php">Submission Date</a>
+                                </li>
+                                </ul>
+                        <li>
+                        <a href="#"><i class="fa fa-edit fa-3x"></i> Forms<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="#">School Form 1</a>
+                            </li>
+                            <li>
+                                <a href="#">School Form 2</a>
+                            </li>
+                             <li>
+                                <a href="#">School Form 5</a>
+                            </li>
+                             <li>
+                                <a href="#">Form 138</a>
+                            </li>
+                             <li>
+                                <a href="#">Form 137</a>
+                            </li>
+
+                         </ul>
+                     <li>
+                        <a   href="login.php"><i class="fa fa-bolt fa-3x"></i> Login</a>
+                    </li>   
+                     <li>
+                        <a   href="registeration.php"><i class="fa fa-laptop fa-3x"></i> Registration</a>
+                    </li>                  
+                    <li>
+                        <a href="#"><i class="fa fa-users fa-3x"></i> Manage User<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="#">Admin</a>
+                            </li>
+                            <li>
+                                <a href="#">Adviser</a>
+                            </li>
+                             <li>
+                                <a href="#">Subject Teacher</a>
+                            </li>
+                             <li>
+                                <a href="#">Registrar</a>
+                            </li>
+                             <li>
+                                <a href="#">Marketing</a>
+                            </li>
+                                </ul>
+                                </li>
+                                </li>
+                                <li>
+                        <a  href="blank.php"><i class="fa fa-wrench fa-3x"></i> Manage Account</a>
+                    </li>
+                       <li  >
+                        <a   href="chart.php"><i class="fa fa-bar-chart-o fa-3x"></i> Reports</a>
+                    </li>   
+                  <li>
+                        <a  href="blank.php"><i class="fa fa-square-o fa-3x"></i> Blank Page</a>
+                    </li>   
+                </ul>
+               
+            </div>
+            
+        </nav>  
+        <!-- /. NAV SIDE  -->
+        <div id="page-wrapper" >
+            <div id="page-inner">
+                <div class="row">
+                    <div class="col-md-12">
+                    <!-- Page Heading -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h3 class="page-header">
+                                Add Subject
+                            </h3>
+
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                <div class="alert alert-info alert-dismissable">
+                    <p>This module allows the user to add the Subject information.</p>
+                </div> 
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form role="form" method="POST" >   
+                                <label><input class="form-control" name="subject_desc" style="width: 400px;" placeholder = "Subject" required onkeyup="this.value = this.value.replace(/[=+_()!@#$%^,./\';}{&*<>]/g, '')"></label>
+                                <br>
+                                    <br>
+                                <label>Subject Type</label>
+                                <br>
+                                <label class="radio-inline">
+                                    <input type="radio" name="type" id="optionsRadiosInline1" value="1" checked>Core
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="type" id="optionsRadiosInline1" value="2">Contextualized
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="type" id="optionsRadiosInline1" value="3">Specialized
+                                </label>
+                                
+                                <button type="submit" name= "submit4" class="btn btn-success"> <span class="glyphicon glyphicon-plus"></span>Add</button>
+                           </form>
+
+                           
+                            <form role="form" method="POST" >
+
+
+                            
+                                <br>
+                                <label><input class="form-control" name="search" style="width: 400px;"></label>
+
+                            
+
+
+
+                                <br>
+                                <button type="submit" name= "submit" class="btn btn-info"> <span class="glyphicon glyphicon-search"></span>Search</button>
+
+
+
+                        
+                            <br/>
+                            
+
+
+                            
+
+
+
+                        </form>
+                        <br>
+                        <br>
+
+                        <form role="form" method="POST">
+
+                            <button type="submit" name= "display" class="btn btn-primary" ><span class="glyphicon glyphicon-folder-open"></span>  View All</button>
+                        
+                            <label>===SORT===</label>                             
+                            <label><select class="form-control" name="typetype" style="width: 150px;">
+                                    <option value="1">Core</option>
+                                    <option value="2">Contextualized</option>
+                                    <option value="3">Specialized</option>
+
+                                </select>
+                                </label>
+                                <button type="submit" name= "display2" class="btn btn-primary" value="Display" ><span class="glyphicon glyphicon-search"></span></button>
+
+                                 <table class="table table-striped table-bordered table-hover" border="1" cellspacing="5" cellpadding="5" width="100%">
+                                <thead>
+                                
+                                    <tr>
+
+                                        <th><center>#</center></th>
+                                        <th><center>Subject</center></th>
+                                        <th><center>Subject type</center></th>
+                                        <th colspan="2"><center>Action</center></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    if (!empty($_REQUEST['search'])) {
+                                        $servername = "localhost";
+                                        $username = "root";
+                                        $password = "";
+                                        $dbname = "admindb";
+                                        $term = $_REQUEST['search'];   
+
+
+                                        $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+                                        $sql = "SELECT * FROM subject_tbl WHERE subject_desc LIKE '%".$term."%' "; 
+                                        $result = mysqli_query($conn, $sql); 
+
+
+                                    }elseif (isset($_POST['display'])) {
+                                       $servername = "localhost";
+                                       $username = "root";
+                                       $password = "";
+                                       $dbname = "admindb";
+
+// Create connection
+                                       $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+// Check connection
+                                       if (!$conn) {
+                                        die("Connection failed: " . mysqli_connect_error());
+                                    }
+
+                                    $sql = "SELECT * FROM subject_tbl ORDER BY subject_id ASC";
+                                    $result = mysqli_query($conn, $sql);
+
+                                }elseif (isset($_POST['display2'])) {
+                                    $servername = "localhost";
+                                       $username = "root";
+                                       $password = "";
+                                       $dbname = "admindb";
+                                       $typetype = $_POST['typetype'];
+
+// Create connection
+                                       $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+// Check connection
+                                       if (!$conn) {
+                                        die("Connection failed: " . mysqli_connect_error());
+                                    }
+
+                                    $sql = "SELECT * FROM subject_tbl WHERE type = $typetype";
+                                    $result = mysqli_query($conn, $sql);
+                                }
+                                else{
+                                    $servername = "localhost";
+                                    $username = "root";
+                                    $password = "";
+                                    $dbname = "admindb";
+
+// Create connection
+                                    $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+// Check connection
+                                    if (!$conn) {
+                                        die("Connection failed: " . mysqli_connect_error());
+                                    }
+
+                                    $sql = "SELECT * FROM subject_tbl ORDER BY subject_id Asc";
+                                    $result = mysqli_query($conn, $sql);}
+
+                                    if (mysqli_num_rows($result) > 0) {
+                                        while($row = mysqli_fetch_assoc($result)) {
+                                            $section_type = $row['subject_id'];
+                                            $_SESSION['subject_type']=$section_type;
+                                            ?>
+
+
+                                            <tr>
+                                                <td><label><?php echo $row['subject_id']; ?></label></td>
+                                                <td><label><?php echo $row['subject_desc']; ?></label>
+
+                                                </td>
+                                                <td><label><?php echo $row['type_desc']; ?></label>
+
+                                                </td>
+                                                <?php
+                                                    echo"<td><a onclick='javascript:confirmationDelete($(this));return false;' href='subject_delete.php?id=".$row['subject_id']."'><span class='glyphicon glyphicon-trash'></span>Delete</a></td>";
+                                                    ?>
+                                                    <?php
+                                                    echo"<td><a href='subject_edit.php?id=".$row['subject_id']."'><span class='glyphicon glyphicon-pencil'></span>Edit</a></td>";
+                                                    ?>
+
+
+                                            </form>
+
+                                        </tr>
+
+                                        <?php }}else{
+                                            echo "0 results";
+                                        } 
+                                        mysqli_close($conn);
+                                        ?>
+
+
+
+
+                                    </tbody>
+
+                                </table>
+                                <br>
+                            </form>
+
+
+
+
+                    </div>
+
+
+                    <div class="col-lg-6">
+
+                        
+                        
+                            <h1><br/>
+                                <br/></h1>
+                                <br/>
+                                <br/>
+                    </div>
+                </div>
+                 <!-- /. ROW  -->
+                 <hr />
+               
+    </div>
+             <!-- /. PAGE INNER  -->
+            </div>
+         <!-- /. PAGE WRAPPER  -->
+        </div>
+     <!-- /. WRAPPER  -->
+    <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
+    <!-- JQUERY SCRIPTS -->
+    <script src="assets/js/jquery-1.10.2.js"></script>
+      <!-- BOOTSTRAP SCRIPTS -->
+    <script src="assets/js/bootstrap.min.js"></script>
+    <!-- METISMENU SCRIPTS -->
+    <script src="assets/js/jquery.metisMenu.js"></script>
+      <!-- CUSTOM SCRIPTS -->
+    <script src="assets/js/custom.js"></script>
+    
+   
+</body>
+</html>
